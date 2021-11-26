@@ -3,21 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-void	displayLinkedList(LinkedList* pList)
-{
-    ListNode* pNode = NULL;
-    if (pList == NULL)
-	{
-        return ;
-	}
-    pNode = pList->headerNode.pLink;
-    for (int i = 0; i < pList->currentElementCount; i++)
-    {
-        printf("%d번째: %d\n", i, pNode->data);
-        pNode = pNode->pLink;
-    }
-}
-
 LinkedList* createLinkedList()
 {
     LinkedList* pList = NULL;
@@ -51,7 +36,7 @@ int addLLElement(LinkedList* pList, int position, ListNode element)
                 }
                 nextNode->pLink = pNode->pLink;
                 pNode->pLink = nextNode;
-                pList->currentElementCount++;
+                (pList->currentElementCount)++;
                 return (TRUE);
             }
         }
@@ -90,6 +75,7 @@ int removeLLElement(LinkedList* pList, int position)
 ListNode* getLLElement(LinkedList* pList, int position)
 {
     ListNode* pNode = NULL;
+
     if (pList != NULL)
     {
         pNode = &(pList->headerNode);
@@ -116,7 +102,10 @@ int getLinkedListLength(LinkedList* pList)
 
 void clearLinkedList(LinkedList* pList)
 {
-    while (removeLLElement(pList, 0));
+    if (pList->headerNode.pLink)
+    {
+        while (removeLLElement(pList, 0));
+    }
 }
 
 void deleteLinkedList(LinkedList* pList)
@@ -126,8 +115,43 @@ void deleteLinkedList(LinkedList* pList)
         clearLinkedList(pList);
         memset(pList, 0, sizeof(LinkedList));
         free(pList);
+        pList = NULL;
     }
-	pList = NULL;
+}
+
+void reverseLinkedList(LinkedList* pList)
+{
+  ListNode *pNode = NULL;
+  ListNode *pCurrentNode = NULL;
+  ListNode *pPrevNode = NULL;
+  
+  if (pList != NULL)
+  {
+    pNode = pList->headerNode.pLink;
+    while (pNode != NULL)
+    {
+      pPrevNode = pCurrentNode;
+      pCurrentNode = pNode;
+      pNode = pNode->pLink;
+      pCurrentNode->pLink = pPrevNode;
+    }
+    pList->headerNode.pLink = pCurrentNode;
+  }
+}
+
+void	displayLinkedList(LinkedList* pList)
+{
+    ListNode* pNode = NULL;
+    if (pList == NULL)
+	{
+        return ;
+	}
+    pNode = pList->headerNode.pLink;
+    for (int i = 0; i < pList->currentElementCount; i++)
+    {
+        printf("%d번째: %d\n", i, pNode->data);
+        pNode = pNode->pLink;
+    }
 }
 
 int main(void)
@@ -148,5 +172,7 @@ int main(void)
     addLLElement(p, 1, n2);
     displayLinkedList(p);
     addLLElement(p, 2, n3);
+    displayLinkedList(p);
+    reverseLinkedList(p);
     displayLinkedList(p);
 }
