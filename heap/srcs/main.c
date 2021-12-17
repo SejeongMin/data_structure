@@ -5,12 +5,13 @@ void	displayHeap(ArrayHeap *pArrayHeap)
     int i = 1;
     if (!pArrayHeap)
       	return ;
+	printf("nodes : ");
     while (i <= pArrayHeap->currentElementCount)
     {
 		printf("%d ", pArrayHeap->pElement[i].key);
 		i++;
     }
-    printf("\n");
+    printf("\n\n");
 }
 
 void	test()
@@ -39,7 +40,7 @@ void	test()
             delNode = deleteHeapNode(pArrayHeap);
 			if (delNode)
 			{
-				printf("%d was deleted!\n", delNode->key);
+				printf("\n%d was deleted!\n\n", delNode->key);
 				free(delNode);
 				displayHeap(pArrayHeap);
 			}

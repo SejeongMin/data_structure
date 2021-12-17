@@ -9,12 +9,14 @@ typedef struct HeapElementType
     int key;
     char data;
 } HeapNode;
+
 typedef struct ArrayHeapType
 {
     int maxElementCount;
     int currentElementCount;
     HeapNode *pElement;
 } ArrayHeap;
+
 ArrayHeap *createArrayHeap(int maxElementCount);
 void insertHeapNode(ArrayHeap *pArrayHeap, HeapNode element);
 void deleteArrayHeap(ArrayHeap *pArrayHeap);

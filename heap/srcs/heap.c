@@ -1,8 +1,9 @@
 #include "heap.h"
+
 ArrayHeap *createArrayHeap(int maxElementCount)
 {
 	ArrayHeap *pArrayHeap;
-  
+
 	if (!(pArrayHeap = (ArrayHeap *)malloc(sizeof(ArrayHeap))))
 		return (NULL);
 	if (!(pArrayHeap->pElement = (HeapNode *)malloc(sizeof(HeapNode) * (maxElementCount + 1))))
@@ -18,8 +19,8 @@ ArrayHeap *createArrayHeap(int maxElementCount)
 void insertHeapNode(ArrayHeap *pArrayHeap, HeapNode element)
 {
 	if (!pArrayHeap || isFullArrayHeap(pArrayHeap))
-  	return ;
-	int nextPos ;
+  		return ;
+	int nextPos;
 	nextPos = ++(pArrayHeap->currentElementCount);
 	while (nextPos != 1 && pArrayHeap->pElement[nextPos / 2].key < element.key)
 	{
@@ -50,7 +51,7 @@ HeapNode *deleteHeapNode(ArrayHeap *pArrayHeap)
 	if (!pArrayHeap)
         return (NULL);
 	if (isEmptyArrayHeap(pArrayHeap))
-			return (NULL);
+		return (NULL);
 	int temp;
 	int parent = 1;
 	int child = 2;
@@ -63,7 +64,6 @@ HeapNode *deleteHeapNode(ArrayHeap *pArrayHeap)
 
     temp = pArrayHeap->currentElementCount--;
     tempNode = &(pArrayHeap->pElement[temp]);
-
     while (child <= pArrayHeap->currentElementCount)
     {
         if (child < pArrayHeap->currentElementCount && pArrayHeap->pElement[child].key < pArrayHeap->pElement[child + 1].key)
@@ -81,7 +81,7 @@ HeapNode *deleteHeapNode(ArrayHeap *pArrayHeap)
 void deleteArrayHeap(ArrayHeap *pArrayHeap)
 {
 	if (!pArrayHeap)
-  	return ;
+  		return;
   	if (pArrayHeap->pElement)
 		free(pArrayHeap->pElement);
   	free(pArrayHeap);

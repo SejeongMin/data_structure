@@ -1,5 +1,26 @@
 #include "bst.h"
 
+int getLevel(BinSearchTreeNode* node)
+{
+    if (node == NULL) return 0;
+
+    int lLevel = getLevel(node->pLeftChild);
+    int rLevel = getLevel(node->pRightChild);
+
+    if (lLevel > rLevel) return lLevel + 1;
+    else return rLevel + 1;
+}
+
+int	get_pow(int x, int y)
+{
+	int ret = 1;
+
+	for(int i = 0; i < y; i++){
+		ret *= x;
+	}
+	return (ret);
+}
+
 void	displayBST(BinSearchTree *tree)
 {
 	BinSearchTreeNode *cur;
@@ -9,12 +30,17 @@ void	displayBST(BinSearchTree *tree)
 	int		i;
 	int		tmp;
 	int		key;
-	int j = 0;
+	int		size = 0;
+	int		cnt = 0;
+	int		exp = 0;
+	int		depth = 0;
 
 	i = 1;
 	path = createLinkedStack();
-
-	while (i < 100)
+	depth = getLevel(tree->pRootNode);
+	size = get_pow(2, depth) - 1;
+	printf("\n---------------\n");
+	while (cnt < size)
 	{
 		cur = tree->pRootNode;
 		tmp = i;
@@ -32,12 +58,25 @@ void	displayBST(BinSearchTree *tree)
 				cur = cur->pRightChild;
 			free(pop);
 		}
+		if (i == get_pow(2, exp))
+		{
+			for(int j = 0; j < depth - exp; j++)
+				printf("  ");
+		}
 		if (cur != NULL)
 			printf("%d ", cur->key);
+		else
+			printf("X ");
+		if ((i - (i / 2)) == get_pow(2, exp))
+		{
+			printf("\n");
+			exp++;
+		}
 		i++;
+		cnt++;
 	}
+	printf("\n---------------\n");
 	free(path);
-	printf("\n");
 }
 
 int test()

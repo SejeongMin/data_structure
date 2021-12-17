@@ -3,7 +3,7 @@
 BinSearchTree *createBinSearchTree()
 {
 	BinSearchTree *pBinSearchTree;
-  
+
 	pBinSearchTree = (BinSearchTree *)malloc(sizeof(BinSearchTree));
 	if (!pBinSearchTree)
 	{
@@ -20,13 +20,15 @@ int insertElementBST(BinSearchTree *pBinSearchTree, BinSearchTreeNode element)
   	BinSearchTreeNode *parent;
 
 	if (!pBinSearchTree)
-  	return (FALSE);
+  		return (FALSE);
   	node = (BinSearchTreeNode *)malloc(sizeof(BinSearchTreeNode));
+	if (!node)
+		return (FALSE);
 	*node = element;
 	node->pLeftChild = NULL;
 	node->pRightChild = NULL;
 	parent = pBinSearchTree->pRootNode;
-	if (!parent)  // RootNode가 없으면 RootNode에 삽입
+	if (!parent) // RootNode가 없으면 RootNode에 삽입
 		pBinSearchTree->pRootNode = node;
 	while (parent) // addNode 를 넣을 위치 찾기
 	{
@@ -57,7 +59,7 @@ int insertElementBST(BinSearchTree *pBinSearchTree, BinSearchTreeNode element)
 int deleteElementBST(BinSearchTree *pBinSearchTree, int key)
 {
 	if (!pBinSearchTree)
-  	return (FALSE);
+  		return (FALSE);
 	BinSearchTreeNode *delNode;
 	BinSearchTreeNode *parent = NULL;
 	BinSearchTreeNode *child;
@@ -81,10 +83,15 @@ int deleteElementBST(BinSearchTree *pBinSearchTree, int key)
 	}
 	if (!delNode->pLeftChild && !delNode->pRightChild)
 	{
-		if (parent->pLeftChild->key == delNode->key)
-			parent->pLeftChild = NULL;
+		if (!parent)
+			pBinSearchTree->pRootNode = NULL;
 		else
-			parent->pRightChild = NULL;
+		{
+			if (parent->pLeftChild->key == delNode->key)
+				parent->pLeftChild = NULL;
+			else
+				parent->pRightChild = NULL;
+		}
 		free(delNode);
 	}
 	else if ((!delNode->pLeftChild && delNode->pRightChild) || (delNode->pLeftChild && !delNode->pRightChild))
@@ -95,10 +102,10 @@ int deleteElementBST(BinSearchTree *pBinSearchTree, int key)
 			child = delNode->pRightChild;
 		if (parent)
 		{
-		if (parent->pLeftChild->key == delNode->key)
-			parent->pLeftChild = child;
-		else
-			parent->pRightChild = child;
+			if (parent->pLeftChild->key == delNode->key)
+				parent->pLeftChild = child;
+			else
+				parent->pRightChild = child;
 		}
 		else
 			pBinSearchTree->pRootNode = child;
@@ -106,20 +113,25 @@ int deleteElementBST(BinSearchTree *pBinSearchTree, int key)
 	}
 	else
 	{
-		tmp = delNode->pLeftChild;
-		while (tmp->pRightChild->pRightChild)
+		tmp = delNode;
+		child = delNode->pLeftChild;
+		while (child->pRightChild)
 		{
-			tmp = tmp->pRightChild;
+			tmp = child;
+			child = child->pRightChild;
 		}
-		if (parent != NULL)
+		if (!parent)
+			pBinSearchTree->pRootNode = child;
+		else
 		{
 			if (parent->pLeftChild->key == delNode->key)
-				parent->pLeftChild = tmp->pRightChild;
+				parent->pLeftChild = child;
 			else
-				parent->pRightChild = tmp->pRightChild;
+				parent->pRightChild = child;
 		}
-		tmp->pRightChild->pLeftChild = tmp;
-		tmp->pRightChild->pRightChild = delNode->pRightChild;
+		child->pRightChild = delNode->pRightChild;
+		if (delNode->pLeftChild != child)
+			child->pLeftChild = delNode->pLeftChild;
 		tmp->pRightChild = NULL;
 		free(delNode);
 	}
@@ -147,8 +159,8 @@ BinSearchTreeNode *searchInternalRecursiveBST(BinSearchTreeNode *pTreeNode, int 
 
 BinSearchTreeNode *searchBST(BinSearchTree *pBinSearchTree, int key)
 {
-	if(pBinSearchTree)
-  	return (NULL);
+	if(!pBinSearchTree)
+  		return (NULL);
   	BinSearchTreeNode *temp;
   
   	temp = pBinSearchTree->pRootNode;
@@ -167,7 +179,7 @@ BinSearchTreeNode *searchBST(BinSearchTree *pBinSearchTree, int key)
 void deleteBinSearchTree(BinSearchTree *pBinSearchTree)
 {
 	if (!pBinSearchTree)
-  	return ;
+  		return ;
 	deleteBinSearchTreeInternal(pBinSearchTree->pRootNode);
 	free(pBinSearchTree);
 }
@@ -175,7 +187,7 @@ void deleteBinSearchTree(BinSearchTree *pBinSearchTree)
 void deleteBinSearchTreeInternal(BinSearchTreeNode *pTreeNode)
 {
 	if (!pTreeNode)
-  	return ;
+  		return ;
 	deleteBinSearchTreeInternal(pTreeNode->pLeftChild);
 	deleteBinSearchTreeInternal(pTreeNode->pRightChild);
 	free(pTreeNode);
