@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   addEdgewithWeightLG.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: semin <semin@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: sujilee <sujilee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:00:08 by sujilee           #+#    #+#             */
-/*   Updated: 2021/12/26 18:50:51 by semin            ###   ########.fr       */
+/*   Updated: 2021/12/20 15:04:07 by sujilee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int addEdgewithWeightLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID, i
 	&& checkVertexValid(pGraph, toVertexID))
 	{
 		dir_nextNode->pLink = pGraph->ppAdjEdge[fromVertexID]->headNode->pLink;
-		// dir_nextNode 
+		//Çìµå¶û dir_nextNode ¿¬°á
 		pGraph->ppAdjEdge[fromVertexID]->headNode->pLink = dir_nextNode;
 
 		if (pGraph->graphType == GRAPH_UNDIRECTED)
@@ -42,7 +42,7 @@ int addEdgewithWeightLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID, i
 			undir_nextNode->weight = weight;
 				
 			undir_nextNode->pLink = pGraph->ppAdjEdge[toVertexID]->headNode->pLink;
-			// dir_nextNode 
+			//Çìµå¶û dir_nextNode ¿¬°á
 			pGraph->ppAdjEdge[toVertexID]->headNode->pLink = undir_nextNode;
 		}
 		pGraph->currentEdgeCount++;

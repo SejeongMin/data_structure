@@ -6,7 +6,7 @@
 /*   By: semin <semin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:13:48 by sujilee           #+#    #+#             */
-/*   Updated: 2021/12/26 18:43:53 by semin            ###   ########.fr       */
+/*   Updated: 2021/12/26 18:48:07 by semin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int removeEdgeLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID)
 {
-	LinkedNode *headNode; //Çìµå³ëµå ±×¸©
-	LinkedNode *prevNode; //»èÁ¦ÇÒ ³ëµåÀÇ Àü ³ëµå ±×¸©
-	LinkedNode *delNode;  //»èÁ¦ÇÒ ³ëµå ±×¸©
+	LinkedNode *headNode; //í—¤ë“œë…¸ë“œ ê·¸ë¦‡
+	LinkedNode *prevNode; //ì‚­ì œí•  ë…¸ë“œì˜ ì „ ë…¸ë“œ ê·¸ë¦‡
+	LinkedNode *delNode;  //ì‚­ì œí•  ë…¸ë“œ ê·¸ë¦‡
 	
-	//±×¸©¿¡ Çìµå³ëµå º¹»ç
+	//ê·¸ë¦‡ì— í—¤ë“œë…¸ë“œ ë³µì‚¬
 	headNode = pGraph->ppAdjEdge[fromVertexID]->headNode;
 	
 	if (!pGraph)
@@ -33,18 +33,18 @@ int removeEdgeLG(LinkedGraph* pGraph, int fromVertexID, int toVertexID)
 	prevNode = headNode;
 	while (delNode)
 	{
-		//delNode°¡ toNode¿Í ÀÏÄ¡ÇÏ¸é break
+		//delNodeê°€ toNodeì™€ ì¼ì¹˜í•˜ë©´ break
 		if (delNode->vertaxID == toVertexID)
 		{
 			break;
 		}
-		//´ÙÀ½ ¼ø¼­·Î ¿¬°á
+		//ë‹¤ìŒ ìˆœì„œë¡œ ì—°ê²°
 		prevNode = delNode;
 		delNode = delNode->pLink;
 	}
 	if (!delNode)
 		return FALSE;
-	//prevNodeÀÇ ¸µÅ©¸¦ delNode ´ÙÀ½ ³ëµå·Î ¿¬°á½ÃÄÑÁÜ	
+	//prevNodeì˜ ë§í¬ë¥¼ delNode ë‹¤ìŒ ë…¸ë“œë¡œ ì—°ê²°ì‹œì¼œì¤Œ	
 	prevNode->pLink = delNode->pLink;
 	free(delNode);
 	

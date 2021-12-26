@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   deleteLinkedGraph.c                                :+:      :+:    :+:   */
+/*   getLLElement.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: semin <semin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/20 16:31:51 by sujilee           #+#    #+#             */
-/*   Updated: 2021/12/26 18:46:24 by semin            ###   ########.fr       */
+/*   Created: 2021/11/22 15:25:10 by sujilee           #+#    #+#             */
+/*   Updated: 2021/12/24 15:50:32 by semin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "linkedgraph.h"
 
-void deleteLinkedGraph(LinkedGraph* pGraph)
+LinkedNode* getLLElement(LinkedList* pList, int position)
 {
-	if (!pGraph)
-		return ;
-	for (int i = 0; i < pGraph->maxVertexCount; i++)
+	LinkedNode *curr;
+	int		index = 0;
+	
+	//매개변수 position에 노드 개수보다 큰 수가 인자로 들어왔을 시 에러
+	// if (position >= pList->currentElementCount)
+	// 	return (FALSE);
+	//curr은 현재 position 0의 노드의 주소값을 참조
+	curr = pList->headNode->pLink;
+	
+	//노드 순회
+	while (index < position)
 	{
-		removeVertexLG(pGraph, i);
-		free(pGraph->ppAdjEdge[i]->headNode);
-		free(pGraph->ppAdjEdge[i]);
+		curr = curr->pLink;
+		index++;
 	}
-	if (pGraph->currentEdgeCount != 0 || pGraph->currentVertexCount != 0)
-		printf("deleteLinkedGraph failed!\n");
-	free(pGraph->pVertex);
-	free(pGraph->ppAdjEdge);
-	free(pGraph);
+	return (curr);
 }

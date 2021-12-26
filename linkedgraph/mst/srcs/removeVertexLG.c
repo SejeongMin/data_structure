@@ -6,7 +6,7 @@
 /*   By: semin <semin@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/20 15:06:05 by sujilee           #+#    #+#             */
-/*   Updated: 2021/12/26 18:48:24 by semin            ###   ########.fr       */
+/*   Updated: 2021/12/26 18:48:42 by semin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int removeVertexLG(LinkedGraph* pGraph, int vertexID)
 {
-	LinkedNode *curr; //¼øÈ¸¿ë Æ÷ÀÎÅÍ ±×¸©
+	LinkedNode *curr; //ìˆœíšŒìš© í¬ì¸í„° ê·¸ë¦‡
 	
 	int count = 0; 
 	
